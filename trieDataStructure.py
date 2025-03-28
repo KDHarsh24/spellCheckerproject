@@ -61,7 +61,6 @@ class Trie:
             """Count how many characters match in total, ignoring order."""
             return sum(min(w1.count(char), w2.count(char)) for char in set(w1))
 
-        # Sort candidates based on multiple factors
         sorted_candidates = sorted(
             candidates,
             key=lambda w: (
@@ -136,15 +135,15 @@ class Trie:
             print(f"⚠️ File '{filename}' not found. Starting with an empty Trie.")
 
 
-trie = Trie()
+# trie = Trie()
 
-trie.load_from_file()
-def load_words():
-    with open('wiki-100k.txt', encoding='utf-8') as word_file:
-        valid_words = set(word_file.read().lower().split())
-    return valid_words
-word_list = load_words()
-for word in word_list:
-    trie.insert(word)
-trie.save_to_file()
+# trie.load_from_file()
+# def load_words():
+#     with open('wiki-100k.txt', encoding='utf-8') as word_file:
+#         valid_words = set(word_file.read().lower().split())
+#     return valid_words
+# word_list = load_words()
+# for word in word_list:
+#     trie.insert(word)
+# trie.save_to_file()
 
