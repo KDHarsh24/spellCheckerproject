@@ -27,7 +27,7 @@ def spell_check():
     levenD = 2
     correct_words = []
 
-    while not correct_words and levenD < len(word)-1:
+    while not correct_words and levenD < len(word):
         correct_words = trie.find_similar_words(word, max_distance=levenD)
         levenD += 1
 

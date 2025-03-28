@@ -70,7 +70,7 @@ class Trie:
                 abs(len(w) - len(word))        # Smaller length difference first
             )
         )
-        print("all the possible Words", sorted_candidates)
+        # print("all the possible Words", sorted_candidates)
         return sorted_candidates[:5] if len(sorted_candidates) > 5 else sorted_candidates
 
 
@@ -147,3 +147,28 @@ class Trie:
 #     trie.insert(word)
 # trie.save_to_file()
 
+# import json
+
+# def load_words(json_filename):
+#     """Load a set of correct words from a JSON file."""
+#     with open(json_filename, "r", encoding="utf-8") as word_file:
+#         word_data = json.load(word_file)  # Load JSON data
+
+#     # Ensure words are in a list or set format
+#     if isinstance(word_data, dict):
+#         valid_words = set(word_data.values())  # If JSON is a dictionary, get values
+#     elif isinstance(word_data, list):
+#         valid_words = set(word_data)  # If JSON is a list, convert it to a set
+#     else:
+#         raise ValueError("Invalid JSON format. Expected a dictionary or list.")
+
+#     return valid_words
+
+# # Usage Example
+# json_filename = "spell_check_data.json"  # Change this to your actual JSON file
+# word_list = list(load_words(json_filename))
+# for word in word_list:
+#     trie.insert(word)
+# trie.save_to_file()
+# # Test Output
+# print(f"✅ Loaded {len(word_list)} words from JSON.")
