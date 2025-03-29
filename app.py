@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, render_template
-from trieDataStructure import Trie
+from algorithms.trieAlgo.trieDataStructure import Trie
 from flask_cors import CORS
 import string 
-from symspell import symSpellCheck
-from pyspell import suggestpyspelling
+from algorithms.symspell import symSpellCheck
+from algorithms.pyspell import suggestpyspelling
 
 # Initialize Flask app
 app = Flask(__name__, template_folder="templates")
@@ -29,8 +29,12 @@ def home():
 # Initialize Trie and load dictionary
 trieEn = Trie()
 trieEn.load_from_file(filename='trie_data_eng.json')
+trieBn = Trie()
+trieBn.load_from_file(filename='trie_data_ben.json')
+trieHi = Trie()
+trieHi.load_from_file(filename='trie_data_hi.json')
 
-@app.route('/spell-check', methods=['POST'])
+@app.route('/english/spell-check', methods=['POST'])
 def spell_check():
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)
@@ -51,7 +55,7 @@ def spell_check():
     return jsonify({"word": word, "suggestions": correct_words})
 
 
-@app.route('/symspell', methods=['POST'])
+@app.route('/english/symspell', methods=['POST'])
 def symspell():
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)
@@ -67,7 +71,7 @@ def symspell():
 
     return jsonify({"word": word, "suggestions": correct_words})
 
-@app.route('/pyspell', methods=['POST'])
+@app.route('/english/pyspell', methods=['POST'])
 def pyspell():
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)

@@ -3,7 +3,7 @@ import time
 from tqdm import tqdm
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 from Levenshtein import distance as levenshtein_distance
-from triespell import triespellChecker  # Ensure this function is implemented
+from algorithms.triespell import triespellChecker  # Ensure this function is implemented
 
 def evaluate_spell_checker(spell_checker, test_data):
     """Evaluate spell checker and display a smooth progress loader."""
