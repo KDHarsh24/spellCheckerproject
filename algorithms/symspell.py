@@ -14,8 +14,15 @@ else:
     print(f"Error: Dictionary file not found at {dictionary_path}")
 
 def symSpellCheck(word):
-    """Return spelling suggestions for a single word."""
+    """Return spelling suggestions for a single word, or an empty array if the word exists."""
+    
+    # If the word exists in the dictionary, return an empty list
+    if sym_spell.word_exists(word):
+        return []
+
+    # Get spelling suggestions
     suggestions = sym_spell.lookup(word, Verbosity.CLOSEST, max_edit_distance=2, include_unknown=True)
+    
     return [suggestion.term for suggestion in suggestions[:5]]
 
 # Example usage

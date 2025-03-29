@@ -12,14 +12,20 @@ def triespellChecker(word, lang):
     correct_words = []
     levenD = 2
     if lang == 'english':
+        if trieEn.search(word):
+            return {"word": word, "suggestions": []}
         while not correct_words and levenD < len(word):
             correct_words = trieEn.find_similar_words(word, max_distance=levenD)
             levenD += 1
     elif lang == 'bengali':
+        if trieBn.search(word):
+            return {"word": word, "suggestions": []}
         while not correct_words and levenD < len(word):
             correct_words = trieBn.find_similar_words(word, max_distance=levenD)
             levenD += 1
     elif lang == 'hindi':
+        if trieHi.search(word):
+            return {"word": word, "suggestions": []}
         while not correct_words and levenD < len(word):
             correct_words = trieHi.find_similar_words(word, max_distance=levenD)
             levenD += 1

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
-from algorithms.trieAlgo.trieDataStructure import Trie
 from flask_cors import CORS
 import string 
+from algorithms.triespell import triespellChecker
 from algorithms.symspell import symSpellCheck
 from algorithms.pyspell import suggestpyspelling
 
@@ -26,65 +26,36 @@ CORS(app, resources={r"/*": {
 def home():
     return render_template("index.html")
 
-# Initialize Trie and load dictionary
-trieEn = Trie()
-trieEn.load_from_file(filename='trie_data_eng.json')
-trieBn = Trie()
-trieBn.load_from_file(filename='trie_data_ben.json')
-trieHi = Trie()
-trieHi.load_from_file(filename='trie_data_hi.json')
 
-@app.route('/english/spell-check', methods=['POST'])
-def spell_check():
+@app.route('/<language>/spell-check', methods=['POST'])
+def spell_check(language):
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)
-
     if not word:
         return jsonify({"error": "Word is required"}), 400
-
-    if trieEn.search(word):
-        return jsonify({"word": word, "suggestions": []})
-
-    levenD = 2
-    correct_words = []
-
-    while not correct_words and levenD < len(word):
-        correct_words = trieEn.find_similar_words(word, max_distance=levenD)
-        levenD += 1
-
+    correct_words = triespellChecker(word, language)
     return jsonify({"word": word, "suggestions": correct_words})
 
 
-@app.route('/english/symspell', methods=['POST'])
-def symspell():
+@app.route('/<language>/symspell', methods=['POST'])
+def symspell(language):
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)
 
     if not word:
         return jsonify({"error": "Word is required"}), 400
-
-    if trieEn.search(word):
-        return jsonify({"word": word, "suggestions": []})
 
     correct_words = symSpellCheck(word)
-
-
     return jsonify({"word": word, "suggestions": correct_words})
 
-@app.route('/english/pyspell', methods=['POST'])
+@app.route('/<language>/pyspell', methods=['POST'])
 def pyspell():
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)
 
     if not word:
         return jsonify({"error": "Word is required"}), 400
-
-    if trieEn.search(word):
-        return jsonify({"word": word, "suggestions": []})
-
     correct_words = suggestpyspelling(word)
-
-
     return jsonify({"word": word, "suggestions": correct_words})
 
 if __name__ == '__main__':
