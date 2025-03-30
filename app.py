@@ -17,8 +17,6 @@ allowed_origins = [
 
 CORS(app, resources={r"/*": {
     "origins": allowed_origins,
-    "methods": ["GET", "POST"],
-    "allow_headers": ["Content-Type", "Authorization"],
     "supports_credentials": True
 }})
 
@@ -31,9 +29,11 @@ def home():
 def spell_check(language):
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)
+    print(word, language)
     if not word:
         return jsonify({"error": "Word is required"}), 400
     correct_words = triespellChecker(word, language)
+    print(correct_words)
     return jsonify({"word": word, "suggestions": correct_words})
 
 

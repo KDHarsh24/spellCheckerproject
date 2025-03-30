@@ -1,11 +1,11 @@
-from algorithms.trieAlgo.trieDataStructure import Trie
+from trieAlgo.trieDataStructure import Trie
 import string
 trieEn = Trie()
-trieEn.load_from_file(filename='../treeData/trie_data_eng.json')
+trieEn.load_from_file(filename='./algorithms/treeData/trie_data_eng.json')
 trieBn = Trie()
-trieBn.load_from_file(filename='../treeData/trie_data_ben.json')
+trieBn.load_from_file(filename='./algorithms/treeData/trie_data_ben.json')
 trieHi = Trie()
-trieHi.load_from_file(filename='../treeData/trie_data_hi.json')
+trieHi.load_from_file(filename='./algorithms/treeData/trie_data_hi.json')
 
 def triespellChecker(word, lang):
     word = word.strip().lower().rstrip(string.punctuation)
