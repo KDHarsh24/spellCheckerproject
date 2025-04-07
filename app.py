@@ -1,4 +1,7 @@
 from flask import Flask, request, jsonify, render_template
+from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 from flask_cors import CORS
 import string 
 from algorithms.triespell import triespellChecker
@@ -7,7 +10,9 @@ from algorithms.pyspell import suggestpyspelling
 
 # Initialize Flask app
 app = Flask(__name__, template_folder="templates")
-
+client = MongoClient(os.getenv("MONGODB_URI"))
+db = client["analytics"]
+collection = db["visitors"]
 # Allowed frontend domains
 allowed_origins = [
     "https://triespellchecker.vercel.app",
@@ -57,6 +62,18 @@ def pyspell():
         return jsonify({"error": "Word is required"}), 400
     correct_words = suggestpyspelling(word)
     return jsonify({"word": word, "suggestions": correct_words})
+
+
+
+@app.route("/track", methods=["POST"])
+def track_user():
+    try:
+        data = request.get_json()
+        collection.insert_one(data)
+        return jsonify({"status": "success"}), 200
+    except Exception as e:
+        print("Error:", e)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

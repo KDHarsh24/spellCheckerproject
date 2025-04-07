@@ -1,4 +1,4 @@
-from trieAlgo.trieDataStructure import Trie
+from algorithms.trieAlgo.trieDataStructure import Trie
 import string
 trieEn = Trie()
 trieEn.load_from_file(filename='./algorithms/treeData/trie_data_eng.json')
