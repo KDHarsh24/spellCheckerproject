@@ -44,7 +44,6 @@ def symspell(language):
 
     if not word:
         return jsonify({"error": "Word is required"}), 400
-
     correct_words = symSpellCheck(word)
     return jsonify({"word": word, "suggestions": correct_words})
 
