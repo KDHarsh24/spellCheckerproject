@@ -6,7 +6,8 @@ trieBn = Trie()
 trieBn.load_from_file(filename='./algorithms/treeData/trie_data_ben.json')
 trieHi = Trie()
 trieHi.load_from_file(filename='./algorithms/treeData/trie_data_hi.json')
-
+trieMan = Trie()
+trieMan.load_from_file(filename='./algorithms/treeData/trie_data_man.json')
 def triespellChecker(word, lang):
     word = word.strip().lower().rstrip(string.punctuation)
     correct_words = []
@@ -22,6 +23,12 @@ def triespellChecker(word, lang):
             return {"word": word, "suggestions": []}
         while not correct_words and levenD < len(word):
             correct_words = trieBn.find_similar_words(word, max_distance=levenD)
+            levenD += 1
+    elif lang == 'manipuri':
+        if trieMan.search(word):
+            return {"word": word, "suggestions": []}
+        while not correct_words and levenD < len(word):
+            correct_words = trieMan.find_similar_words(word, max_distance=levenD)
             levenD += 1
     elif lang == 'hindi':
         if trieHi.search(word):

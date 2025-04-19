@@ -48,13 +48,14 @@ def symspell(language):
     return jsonify({"word": word, "suggestions": correct_words})
 
 @app.route('/<language>/pyspell', methods=['POST'])
-def pyspell():
+def pyspell(language):
     data = request.json
     word = data.get("word", "").strip().lower().rstrip(string.punctuation)
-
+    print(word, 'inside pyspell')
     if not word:
         return jsonify({"error": "Word is required"}), 400
     correct_words = suggestpyspelling(word)
+    print(correct_words, 'correct words')
     return jsonify({"word": word, "suggestions": correct_words})
 
 

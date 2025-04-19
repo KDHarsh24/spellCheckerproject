@@ -2,10 +2,11 @@ from trieDataStructure import Trie
 import json
 
 trie = Trie()
-
-trie.load_from_file(filename='./algorithms/treeData/trie_data_ben.json')
+dictFile = './algorithms/treeData/trie_data_man.json'
+txtWords = './algorithms/treeData/manipuri_words.txt'
+trie.load_from_file(filename=dictFile)
 def load_words():
-    with open('./algorithms/treeData/bengaliwords.txt', encoding='utf-8') as word_file:
+    with open(txtWords, encoding='utf-8') as word_file:
         words = word_file.read().lower().split()
         valid_words = [word for word in words if len(word) > 1]
     return valid_words
@@ -13,7 +14,7 @@ def load_words():
 word_list = load_words()
 for word in word_list:
     trie.insert(word)
-trie.save_to_file(filename='./algorithms/treeData/trie_data_ben.json')
+trie.save_to_file(filename=dictFile)
 
 
 
